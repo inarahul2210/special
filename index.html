@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, My Love! ❤️</title>
+  <!-- SEO & Meta Tags -->
+  <meta name="description"
+    content="A magical, interactive digital scrapbook and love story created just for you. Happy Birthday!">
+  <meta name="theme-color" content="#1C122C">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;600&family=Outfit:wght@400;600;800&family=Sacramento&display=swap"
+    rel="stylesheet">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+  <!-- Starry Night Background Canvas -->
+  <canvas id="starry-canvas"></canvas>
+
+  <!-- Fireworks Canvas (only active during finale) -->
+  <canvas id="fireworks-canvas"></canvas>
+
+  <!-- Floating Hearts Container -->
+  <div id="hearts-container"></div>
+
+  <!-- Music Cassette Player (Floating Widget after welcome) -->
+  <div id="cassette-widget" class="hidden">
+    <div class="cassette-container">
+      <div class="cassette-tape">
+        <div class="tape-label">
+          <span class="label-title">Our Playlist 💝</span>
+          <div class="tape-reels">
+            <div class="reel left-reel"></div>
+            <div class="reel right-reel"></div>
+          </div>
+        </div>
+      </div>
+      <button id="music-toggle" class="control-btn" aria-label="Toggle music">
+        <svg viewBox="0 0 24 24" class="play-icon">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+        <svg viewBox="0 0 24 24" class="pause-icon hidden">
+          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+        </svg>
+      </button>
+    </div>
+    <audio id="bg-audio" loop>
+      <source src="assets/audio/background_theme.mp3" type="audio/mpeg">
+      <!-- Fallback royalty-free piano mp3 will be loaded if file is missing -->
+    </audio>
+  </div>
+
+  <!-- CHAPTER 0: WELCOME & DECRYPTION LOCK GATE -->
+  <div id="lock-screen" class="active-screen">
+
+    <!-- Floating background photos of her (6-7 small photos) -->
+    <div class="lock-collage">
+      <div class="collage-photo photo-1" tabindex="0">
+        <div class="photo-overlay"><span>Tap to reveal</span></div>
+        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&auto=format&fit=crop&q=80"
+          alt="Dummy Photo 1">
+      </div>
+      <div class="collage-photo photo-2" tabindex="0">
+        <div class="photo-overlay"><span>Tap to reveal</span></div>
+        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop&q=80"
+          alt="Dummy Photo 2">
+      </div>
+      <div class="collage-photo photo-3" tabindex="0">
+        <div class="photo-overlay"><span>Tap to reveal</span></div>
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&auto=format&fit=crop&q=80"
+          alt="Dummy Photo 3">
+      </div>
+      <div class="collage-photo photo-4" tabindex="0">
+        <div class="photo-overlay"><span>Tap to reveal</span></div>
+        <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=400&auto=format&fit=crop&q=80"
+          alt="Dummy Photo 4">
+      </div>
+      <div class="collage-photo photo-5" tabindex="0">
+        <div class="photo-overlay"><span>Tap to reveal</span></div>
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80"
+          alt="Dummy Photo 5">
+      </div>
+      <div class="collage-photo photo-6" tabindex="0">
+        <div class="photo-overlay"><span>Tap to reveal</span></div>
+        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400&auto=format&fit=crop&q=80"
+          alt="Dummy Photo 6">
+      </div>
+      <div class="collage-photo photo-7" tabindex="0">
+        <div class="photo-overlay"><span>Tap to reveal</span></div>
+        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=200&auto=format&fit=crop&q=80"
+          alt="Dummy Photo 7">
+      </div>
+    </div>
+    <!-- Notes panel shown below collage; each card corresponds to a photo above -->
+    <div class="photo-notes-panel" aria-hidden="true">
+      <div class="note-card" data-index="0">
+        <p>Your laugh makes every day brighter.</p>
+      </div>
+      <div class="note-card" data-index="1">
+        <p>Remember when we danced in the rain? That moment is forever.</p>
+      </div>
+      <div class="note-card" data-index="2">
+        <p>Every small smile from you feels like a little home.</p>
+      </div>
+      <div class="note-card" data-index="3">
+        <p>When I look at you, I see my happiest future.</p>
+      </div>
+      <div class="note-card" data-index="4">
+        <p>This memory reminds me why I fell in love with you.</p>
+      </div>
+      <div class="note-card" data-index="5">
+        <p>I love how your eyes sparkle when you’re excited.</p>
+      </div>
+      <div class="note-card" data-index="6">
+        <p>You make even the ordinary feel magical.</p>
+      </div>
+    </div>
+
+    <!-- Cover Welcome Page -->
+    <div class="lock-card glass active-card" id="welcome-card">
+      <div class="queen-profile-frame">
+        <img src="https://images.unsplash.com/photo-1531747118685-ca8fa6e08806?w=800&auto=format&fit=crop&q=80"
+          alt="Dummy Large Photo of Her" class="queen-img">
+        <span class="crown-badge">👑</span>
+      </div>
+      <h1 class="welcome-title text-gradient">Happy Birthday, My Love! 💖</h1>
+      <div class="welcome-pill-row">
+        <span class="welcome-pill">🎁 6 Chapters</span>
+        <span class="welcome-pill">✨ Secret gifts</span>
+        <span class="welcome-pill">💌 Just for Ina</span>
+      </div>
+      <p class="welcome-subtitle">Ina, you mean the absolute world to me. Today is your day, and I have prepared a
+        little digital love story and surprise for you. Click below to begin!</p>
+
+      <button id="start-surprise-btn" class="action-btn">Open Your Surprise 🎁</button>
+      <p class="enter-disclaimer">Turn on your sound for the full experience. 🎵</p>
+    </div>
+
+    <!-- Passcode Verification Page -->
+    <div class="lock-card glass hidden-card" id="passcode-card">
+      <div class="lock-heart-icon">
+        <svg viewBox="0 0 24 24" class="heart-pulse-svg">
+          <path
+            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg>
+      </div>
+      <h2 class="welcome-title">Verify It's You, My Queen</h2>
+      <p class="welcome-subtitle">Enter our special four-digit date — only we know it. 🔐</p>
+
+      <!-- 4-box OTP Input -->
+      <div class="otp-input-group" id="otp-group">
+        <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-0" autocomplete="off" aria-label="Digit 1">
+        <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-1" autocomplete="off" aria-label="Digit 2">
+        <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-2" autocomplete="off" aria-label="Digit 3">
+        <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-3" autocomplete="off" aria-label="Digit 4">
+      </div>
+      <p id="lock-error-msg" class="lock-error-text hidden">Hmm, that's not right. Think about the date we said "Haan" 💕</p>
+
+      <button id="unlock-btn" class="action-btn otp-submit-btn">Unlock Vault 🔑</button>
+      <button id="back-to-welcome-btn" class="text-btn" style="margin-top:12px;">← Back to Home</button>
+    </div>
+  </div>
+
+  <!-- ================================================
+       MEMORY GALLERY SCREEN (shown after unlock, before chapters)
+       ================================================ -->
+  <div id="gallery-screen" class="hidden">
+    <!-- Floating petals background -->
+    <div class="gallery-petals" id="gallery-petals"></div>
+
+    <!-- Header -->
+    <div class="gallery-header-block">
+      <p class="gallery-tag">Before we begin...</p>
+      <h1 class="gallery-title">Our Story in Pictures</h1>
+      <p class="gallery-sub">Every frame holds a memory. Every memory holds us. 💕</p>
+    </div>
+
+    <!-- 12-slot grid -->
+    <div class="gallery-grid" id="gallery-grid">
+      <!-- 12 slots injected by JS -->
+    </div>
+
+    <!-- Romantic finale overlay (hidden until all images loaded) -->
+    <div class="gallery-finale hidden" id="gallery-finale">
+      <div class="gallery-finale-card">
+        <div class="finale-sparkle">✨</div>
+        <p class="gallery-finale-msg" id="gallery-typewriter"></p>
+        <button id="gallery-continue-btn" class="gallery-continue-btn">
+          Continue My Birthday Journey →
+        </button>
+      </div>
+    </div>
+
+    <!-- Confetti canvas -->
+    <canvas id="gallery-confetti" class="gallery-confetti-canvas"></canvas>
+  </div>
+
+  <!-- MAIN STORY CONTENT (Chapters Wrapper) -->
+  <main id="main-content" class="hidden">
+
+    <!-- FLOATING PROGRESS & NAVIGATION HEADER -->
+    <header class="story-header glass">
+      <div class="progress-container">
+        <div id="story-progress" class="progress-bar"></div>
+      </div>
+      <nav class="chapter-nav">
+        <button class="nav-btn active" data-chapter="2" id="nav-btn-2">Timeline</button>
+        <button class="nav-btn locked" data-chapter="3" id="nav-btn-3">Memories</button>
+        <button class="nav-btn locked" data-chapter="4" id="nav-btn-4">Surprises</button>
+        <button class="nav-btn locked" data-chapter="5" id="nav-btn-5">Letter</button>
+        <button class="nav-btn locked" data-chapter="6" id="nav-btn-6">Birthday! 🎂</button>
+      </nav>
+    </header>
+
+    <!-- SECTION CONTAINER -->
+    <div class="chapters-container">
+
+
+
+      <!-- OUR TIMELINE (Scrapbook Journey) -->
+      <section id="chapter-2" class="chapter-section active-chapter">
+        <div class="section-heading-container">
+          <h2 class="section-title">Our Love Story Roadmap</h2>
+          <p class="section-subtitle">Click through the major steps of our journey so far.</p>
+        </div>
+
+        <div class="scrapbook-container glass">
+          <div class="timeline-navigation">
+            <button id="prev-timeline-btn" class="circle-btn" disabled>&larr;</button>
+            <div class="timeline-progress-track">
+              <div id="timeline-indicator" class="timeline-indicator"></div>
+            </div>
+            <button id="next-timeline-btn" class="circle-btn">&rarr;</button>
+          </div>
+
+          <div class="scrapbook-view">
+            <!-- Timeline details populated dynamically -->
+            <div class="scrapbook-page" id="scrapbook-card">
+              <div class="scrapbook-photo-frame">
+                <div class="scrapbook-tape top-left"></div>
+                <div class="scrapbook-tape top-right"></div>
+                <img id="timeline-img" src="" alt="Milestone photo" class="scrapbook-img">
+              </div>
+              <div class="scrapbook-details">
+                <span id="timeline-date" class="scrapbook-date">October 14, 2024</span>
+                <h3 id="timeline-title" class="scrapbook-title">The First Date</h3>
+                <p id="timeline-desc" class="scrapbook-desc">Description of our amazing date here...</p>
+                <div class="scrapbook-sticker" id="timeline-sticker">💖</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chapter-completion-panel hidden" id="completion-2">
+          <p class="completion-msg">Every single milestone with you is my new favorite memory. 🗺️</p>
+          <button class="next-chapter-btn" data-target="3">Unlock Memories ➔</button>
+        </div>
+      </section>
+
+      <!-- MEMORY LANE (Draggable Polaroids) -->
+      <section id="chapter-3" class="chapter-section hidden-chapter">
+        <div class="section-heading-container">
+          <h2 class="section-title">The Draggable Photo Pile</h2>
+          <p class="section-subtitle">Click and drag these Polaroids to sort through our special moments. Double click
+            to enlarge!</p>
+        </div>
+
+        <div class="polaroid-canvas cork-board" id="polaroid-board">
+          <!-- Polaroids will be dynamically created here -->
+          <div class="polaroid-pile-loading">Loading memory capsule...</div>
+        </div>
+
+        <!-- Lightbox Modal for enlarged image -->
+        <div id="polaroid-lightbox" class="lightbox hidden">
+          <div class="lightbox-content">
+            <span class="lightbox-close">&times;</span>
+            <img id="lightbox-img" src="" alt="Enlarged photo">
+            <p id="lightbox-caption" class="lightbox-caption"></p>
+          </div>
+        </div>
+
+        <div class="chapter-completion-panel hidden" id="completion-3">
+          <p class="completion-msg">We look so good together. Let's make a million more memories! 📸</p>
+          <button class="next-chapter-btn" data-target="4">Reveal Surprises ➔</button>
+        </div>
+      </section>
+
+      <!-- LITTLE SURPRISES (Wishing Stars & Scratch Card) -->
+      <section id="chapter-4" class="chapter-section hidden-chapter">
+        <div class="section-heading-container">
+          <h2 class="section-title">Little Vaults of Affection</h2>
+          <p class="section-subtitle">Tap the wishing stars and scratch the cards to uncover cute surprises.</p>
+        </div>
+
+        <div class="surprises-grid">
+          <!-- Wishing Stars -->
+          <div class="surprise-box wish-stars-box glass">
+            <h3>Wishing Stars 🌟</h3>
+            <p class="box-desc">Tap a glowing star to reveal a special birthday wish or secret note.</p>
+            <div class="wish-stars-grid">
+              <button class="wish-star" data-index="0" aria-label="Wish Star 1">⭐</button>
+              <button class="wish-star" data-index="1" aria-label="Wish Star 2">⭐</button>
+              <button class="wish-star" data-index="2" aria-label="Wish Star 3">⭐</button>
+              <button class="wish-star" data-index="3" aria-label="Wish Star 4">⭐</button>
+              <button class="wish-star" data-index="4" aria-label="Wish Star 5">⭐</button>
+            </div>
+
+            <div id="wish-modal" class="custom-modal hidden">
+              <div class="modal-card scale-in">
+                <span class="modal-close" id="close-wish-modal">&times;</span>
+                <div class="modal-emoji">🌟</div>
+                <h4>Birthday Wish</h4>
+                <p id="wish-reason-text" class="handwritten-text">"You are the brightest star in my sky."</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scratch Card -->
+          <div class="surprise-box scratch-card-box glass">
+            <h3>Golden Ticket Scratch Card 🎫</h3>
+            <p class="box-desc">Use your mouse/finger to scratch away the golden layer and claim your custom birthday
+              ticket!</p>
+            <div class="scratch-card-container">
+              <canvas id="scratch-canvas" width="300" height="150"></canvas>
+              <div class="scratch-underlay">
+                <div class="ticket-emoji">🎫</div>
+                <h4 class="ticket-title">VOUCHER: One Cozy Movie Date!</h4>
+                <p class="ticket-desc">Redeemable anytime for a film of your choice, bottomless popcorn, and maximum
+                  cuddles.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chapter-completion-panel hidden" id="completion-4">
+          <p class="completion-msg">Hope those brought a smile to your beautiful face! 🎟️</p>
+          <button class="next-chapter-btn" data-target="5">Open My Letter ➔</button>
+        </div>
+      </section>
+
+      <!-- LOVE LETTER (Wax Seal Envelope) -->
+      <section id="chapter-5" class="chapter-section hidden-chapter">
+        <div class="section-heading-container">
+          <h2 class="section-title">From My Heart</h2>
+          <p class="section-subtitle">Click the wax seal to open and read what I wrote just for you. 💌</p>
+        </div>
+
+        <div class="envelope-wrapper">
+          <div class="envelope" id="envelope-main">
+            <!-- Wax seal (click to break and open) -->
+            <div class="wax-seal" id="wax-seal">
+              <span class="wax-seal-icon">💌</span>
+              <span class="wax-seal-hint">Break Seal</span>
+            </div>
+            <div class="envelope-flap"></div>
+            <div class="envelope-pocket"></div>
+            <div class="letter-paper" id="letter-paper">
+              <div class="letter-scrollable-content">
+                <h3 class="letter-header">Dearest Love,</h3>
+                <p class="letter-body-text" id="typewriter-letter">
+                  <!-- Typewriter effect inserts letter here -->
+                </p>
+                <p class="letter-signature">Forever Yours,<br><span class="heart-signature">❤️</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chapter-completion-panel hidden" id="completion-5">
+          <p class="completion-msg">I mean every single word. Let's make today unforgettable! 🎂</p>
+          <button class="next-chapter-btn" data-target="6">Go To Your Celebration! ➔</button>
+        </div>
+      </section>
+
+      <!-- CHAPTER 6: GRAND FINALE (Cake & Celebration) -->
+      <section id="chapter-6" class="chapter-section hidden-chapter">
+        <div class="section-heading-container">
+
+          <h2 class="section-title text-gradient">Make a Wish, My Love!</h2>
+          <p class="section-subtitle">Blow out the candles to unlock the grand celebration!</p>
+        </div>
+
+        <div class="finale-container glass">
+          <!-- Birthday Cake Section -->
+          <div class="cake-container" id="cake-interactive">
+            <div class="cake">
+              <div class="frosting top-frosting"></div>
+              <div class="frosting mid-frosting"></div>
+              <div class="cake-base"></div>
+              <div class="candles-container">
+                <div class="candle candle-1 active-candle">
+                  <div class="flame"></div>
+                </div>
+                <div class="candle candle-2 active-candle">
+                  <div class="flame"></div>
+                </div>
+                <div class="candle candle-3 active-candle">
+                  <div class="flame"></div>
+                </div>
+              </div>
+            </div>
+            <button id="blow-btn" class="action-btn">Blow Out Candles 💨</button>
+            <p class="blow-subtext">Click the button or blow near the screen!</p>
+          </div>
+
+          <!-- Celebration Board (hidden until blow) -->
+          <div id="celebration-board" class="celebration-board hidden scale-in">
+            <div class="celebration-badge">🥳 Happy Birthday! 🥳</div>
+            <h1 class="celebration-title">Here's to You, Beautiful!</h1>
+            <p class="celebration-text">
+              May this year bring you as much happiness, laughter, and warmth as you bring into my life every day.
+              You deserve the absolute world, and I will do everything to help you reach your dreams.
+            </p>
+
+            <div class="date-coupons-title">💖 Your Birthday Coupons 💖</div>
+            <div class="coupons-grid">
+              <div class="coupon-card">
+                <div class="coupon-header">🎟️ DATE NIGHT</div>
+                <div class="coupon-body">A fancy dinner of your choice. No arguments allowed!</div>
+              </div>
+              <div class="coupon-card">
+                <div class="coupon-header">💆 SPA TICKET</div>
+                <div class="coupon-body">Full relaxing back and foot massage whenever requested.</div>
+              </div>
+              <div class="coupon-card">
+                <div class="coupon-header">✈️ TRIP VOUCHER</div>
+                <div class="coupon-body">A weekend getaway to any destination you pick!</div>
+              </div>
+            </div>
+
+            <!-- Heart-shaped Love Gauge -->
+            <div class="heart-gauge-wrapper">
+              <svg class="heart-gauge-svg" viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <clipPath id="heart-clip">
+                    <path d="M50 85 C50 85 10 55 10 32 C10 18 20 8 35 8 C42 8 48 12 50 16 C52 12 58 8 65 8 C80 8 90 18 90 32 C90 55 50 85 50 85 Z"/>
+                  </clipPath>
+                  <linearGradient id="heart-grad" x1="0" y1="1" x2="0" y2="0">
+                    <stop offset="0%" stop-color="#FF4A6E"/>
+                    <stop offset="100%" stop-color="#FFB3C6"/>
+                  </linearGradient>
+                </defs>
+                <!-- Heart outline -->
+                <path class="heart-outline-path" d="M50 85 C50 85 10 55 10 32 C10 18 20 8 35 8 C42 8 48 12 50 16 C52 12 58 8 65 8 C80 8 90 18 90 32 C90 55 50 85 50 85 Z"/>
+                <!-- Liquid fill clipped to heart shape -->
+                <rect id="heart-fill-rect" x="0" y="90" width="100" height="90" fill="url(#heart-grad)" clip-path="url(#heart-clip)"/>
+              </svg>
+              <div class="heart-gauge-label"><span id="love-percent">0</span>%</div>
+            </div>
+
+            <div class="finale-love-buttons">
+              <button id="love-yes-btn" class="action-btn pink-gradient">I Love You! ❤️</button>
+            </div>
+
+            <p id="love-overflow-msg" class="love-overflow-msg hidden">My love for you has overflowed past 100% into
+              infinity! ∞</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Core App Logic scripts -->
+  <script src="js/canvas-stars.js"></script>
+  <script src="js/fireworks.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
