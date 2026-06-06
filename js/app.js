@@ -45,42 +45,42 @@ document.addEventListener('DOMContentLoaded', () => {
       date: "Bachpan Ke Din 👧👦",
       title: "Bachpan Se Shuruat",
       desc: "Tu meri pehli dost hai, childhood friend hai, best friend hai — aur main chota tha tabse tujhe jaanta hoon aur tere saath hi hoon. Niche se aakar 'Rahul! Rahul!' bulana, gaye ki tanki saaf karna Holi ke festival ke liye — sab kuch tere saath hi toh magical tha. Thank you for making my childhood magical ❤️. Phir mere attitude ki wajah se tere birthday pe na aaya aur sab band ho gaya.",
-      img: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&auto=format&fit=crop&q=80",
+      img: "images/20221225_174207_IMG_5423.JPG",
       sticker: "🐮"
     },
     {
       date: "3-4 Saal Baad 🔄",
       title: "Tu Phir Aayi",
       desc: "3-4 saal ki khamoshi ke baad tu hi aage aayi aur message kiya — 'Purani baaton ko bhool kar aage badhna chahiye.' Tujhe nahi pata tha tab ke main andar se kitna khush hua tha. Dhire-dhire group trips mein mile, events mein mile, aur teri woh purani hesitation — aur meri bhi — dheere dheere chali gayi.",
-      img: "https://images.unsplash.com/photo-1464851707681-f9d5fdaccca8?w=800&auto=format&fit=crop&q=80",
+      img: "images/20220609_204518_76f69810-0d2e-4951-b88d-320e6f125290.jpg",
       sticker: "✉️"
     },
     {
       date: "Mumbai Trip 🚄",
       title: "Jab Dil Ne Bola",
       desc: "Train ki woh sari masti, Mumbai ghumna — tere saath sab kuch itna alag feel hota tha. Auto mein tu future partner ki baatein kar rahi thi aur main andar hi andar ro raha tha. Mumbai station par utarte waqt aankhein bhar aayi. Sab ne dekh liya, par main feelings chupa gaya — tujhe pata nahi tha na?",
-      img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80",
+      img: "images/20230224_205205_57d4a2d7-b022-4535-8c54-5ce6d2c1b538.jpg",
       sticker: "🚂"
     },
     {
       date: "Café Confession ☕",
       title: "Pehla 'Haan' Maangna",
-      desc: "Phir aaya wo din... Bahut zyada mushkil ke baad humein yeh mauka mila ki hum dono kahin bahar akele jaa sakein. Par coffee itni gandi thi aur nervousness itni zyada ki tujhe seedha dekh bhi nahi paya. Maine apni life ka sabse important moment itne gande way se start kiya ki kya bataun. Bina tujhe dekhe apne pyaar ke baare mein batana bahut bura propose tha 😂. Agle din gym mein tera message aaya: 'Rahul, hamara koi future nahi hai.' Dil toota, par tujhe khona nahi tha.",
-      img: "https://images.unsplash.com/photo-1498804103079-a6351b050096?w=800&auto=format&fit=crop&q=80",
+      desc: "Phir aaya wo din... Bahut zyada mushkil ke baad humein yeh mauka mila ki hum dono kahin bahar akele jaa sakein. Par coffee itni gandi thi aur nervousness itni zyada ki tujhe seedha dekh bhi nahi paya. Maine apni life ka sabse important moment itne gande way se start kiya ki kya bataun. Bina tujhe dekhe apne pyaar ke baare mein batana bahut bura propose tha 😂. Agle din gym mein tera message aaya: 'Rahul, hamara koi future nahi hai.' Dil toota, par tujhe khona nahi tha. Iska koi image nhi tha 😂",
+      img: "images/Snapchat-1146002892.jpg",
       sticker: "💔"
     },
     {
-      date: "Manali Rain 🌧️",
+      date: "Manali Trip",
       title: "Baarish Mein Tere Saath",
       desc: "Phir ek din bhagwan ne phir mauka diya... Raat ke 10 baje baarish mein tujhe famous Siddu khilane ke liye le gaya. Utarte hi paani aa raha tha, maine tera haath pakda aur hum dono bhaage. Uss ek moment mein kuch change ho gaya — nahi pata tha tab ke yeh haath mujhe hamesha thamne ko mill jaiga ❤️.",
-      img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800&auto=format&fit=crop&q=80",
+      img: "images/20250224_164135_IMG_3549.jpg",
       sticker: "☔"
     },
     {
       date: "22 October 💍",
       title: "Tu Ne 'Haan' Kaha",
       desc: "Gym ki care, woh rizz reels, aur phir tera woh ek message: 'Khud ka naam jaankar kya karoge?' — yaar tu kitni cute hai! 22 October ko tune haan kaha aur us din se meri zindagi teri ho gayi. Aur teri meri. Aaj bhi us din ke baare mein sochta hoon aur muskurata hoon. ❤️",
-      img: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=800&auto=format&fit=crop&q=80",
+      img: "images/IMG_2362 (1).JPG",
       sticker: "❤️"
     }
   ];
@@ -366,18 +366,18 @@ Happy Birthday, Ina. I love you to the stars and back! ❤️`;
   // MEMORY GALLERY LOGIC
   // ============================================================
   const galleryData = [
-    { src: 'assets/gallery/1.jpg', caption: 'The smile that brightens every room ❤️' },
-    { src: 'assets/gallery/2.jpg', caption: 'One of my favorite memories ✨' },
-    { src: 'assets/gallery/3.jpg', caption: 'Still makes me smile every time 😊' },
-    { src: 'assets/gallery/4.jpg', caption: 'Family, love and happiness ❤️' },
-    { src: 'assets/gallery/5.jpg', caption: 'Main character energy 👑' },
-    { src: 'assets/gallery/6.jpg', caption: 'This picture deserves a frame 🖼️' },
-    { src: 'assets/gallery/7.jpg', caption: 'Caught being adorable 😍' },
-    { src: 'assets/gallery/8.jpg', caption: 'I still laugh at this one 😂' },
-    { src: 'assets/gallery/9.jpg', caption: 'A moment worth keeping forever 💕' },
-    { src: 'assets/gallery/10.jpg', caption: 'Pure happiness captured 📸' },
-    { src: 'assets/gallery/11.jpg', caption: 'My lucky day was meeting you ❤️' },
-    { src: 'assets/gallery/12.jpg', caption: 'The most beautiful chapter of my life ✨' },
+    { src: 'images/VID_20260528_115730_645.mp4', caption: 'The smile that brightens every room ❤️' },
+    { src: 'images/34d4d95fd394466a81826d067c3ef256.mp4', caption: 'One of my favorite memories ✨' },
+    { src: 'images/268b8458eae84c859230793d3bf34124.mp4', caption: 'Still makes me smile every time 😊' },
+    { src: 'images/4120aeb96b28465d9835a09077c894cd.mp4', caption: 'Family, love and happiness ❤️' },
+    { src: 'images/eb0ede02207b4019990461a699e7c776.mp4', caption: 'Main character energy 👑' },
+    { src: 'images/fa224fb47238447ea71d8fb66cc0edee.mp4', caption: 'This picture deserves a frame 🖼️' },
+    { src: 'images/VID_20260513_113641_684.mp4', caption: 'Caught being adorable 😍' },
+    { src: 'images/VID_20260523_084126_605.mp4', caption: 'I still laugh at this one 😂' },
+    { src: 'images/VID_20260523_084126_606.mp4', caption: 'A moment worth keeping forever 💕' },
+    { src: 'images/d9472d57d54545e7a7182a5f5acd6759.mp4', caption: 'Pure happiness captured 📸' },
+    { src: 'images/0419993ba0634ffda7dd002176a2a314.mp4', caption: 'My lucky day was meeting you ❤️' },
+    { src: 'images/47099d555eec458a9775bbe3d8059680.mp4', caption: 'The most beautiful chapter of my life ✨' },
   ];
 
   const galleryFinaleText = `My favorite picture isn't in this gallery...\nIt's the one we're still creating together. ❤️`;
@@ -405,11 +405,11 @@ Happy Birthday, Ina. I love you to the stars and back! ❤️`;
 
     // Reveal images one by one every 1 second
     galleryData.forEach((item, i) => {
-      setTimeout(() => revealGallerySlot(i, item), (i + 1) * 2000);
+      setTimeout(() => revealGallerySlot(i, item), (i + 1) * 100);
     });
 
     // After all 12 are shown: wait 2s then trigger finale
-    setTimeout(() => triggerGalleryFinale(), (galleryData.length * 2 + 4) * 1000);
+    setTimeout(() => triggerGalleryFinale(), (galleryData.length * 2 + 4) * 100);
   }
 
   function revealGallerySlot(index, item) {
@@ -427,12 +427,24 @@ Happy Birthday, Ina. I love you to the stars and back! ❤️`;
     const imgWrap = document.createElement('div');
     imgWrap.classList.add('gallery-img-wrap');
 
-    const img = document.createElement('img');
-    img.src = item.src;
-    img.alt = item.caption;
-    img.classList.add('gallery-img');
-    // Fallback: show gradient placeholder if image missing
-    img.onerror = function () {
+    let media;
+    if (item.src.endsWith('.mp4') || item.src.endsWith('.webm')) {
+      media = document.createElement('video');
+      media.src = item.src;
+      media.autoplay = true;
+      media.loop = false; // changed to false so they stop after one run
+      media.muted = true;
+      media.playsInline = true;
+      media.classList.add('gallery-img');
+    } else {
+      media = document.createElement('img');
+      media.src = item.src;
+      media.alt = item.caption;
+      media.classList.add('gallery-img');
+    }
+
+    // Fallback: show gradient placeholder if media missing
+    media.onerror = function () {
       this.style.display = 'none';
       imgWrap.style.background = `linear-gradient(135deg,
         hsl(${320 + index * 10}, 60%, 75%) 0%,
@@ -443,7 +455,7 @@ Happy Birthday, Ina. I love you to the stars and back! ❤️`;
       imgWrap.appendChild(icon);
     };
 
-    imgWrap.appendChild(img);
+    imgWrap.appendChild(media);
 
     const cap = document.createElement('p');
     cap.classList.add('gallery-caption');
@@ -744,6 +756,16 @@ Happy Birthday, Ina. I love you to the stars and back! ❤️`;
           const originalText = activeCard.querySelector('p') ? activeCard.querySelector('p').textContent : '';
 
           // Expand the clicked photo and insert an inline poster-note below the image
+          const img = photo.querySelector('img');
+          if (img) {
+            if (img.naturalHeight > img.naturalWidth) {
+              photo.classList.add('is-portrait');
+              photo.classList.remove('is-landscape');
+            } else {
+              photo.classList.add('is-landscape');
+              photo.classList.remove('is-portrait');
+            }
+          }
           photo.classList.add('expanded');
           let poster = photo.querySelector('.poster-note');
           if (!poster) {
@@ -1078,7 +1100,7 @@ Happy Birthday, Ina. I love you to the stars and back! ❤️`;
     function dragStart(e) {
       active = true;
       card.style.zIndex = ++topZIndex;
-      
+
       // Disable transition so dragging is instant and smooth without delay
       card.style.transition = 'none';
 
@@ -1379,60 +1401,66 @@ Happy Birthday, Ina. I love you to the stars and back! ❤️`;
 
   // --- CHAPTER 6: CAKE & GRAND FINALE LOGIC ---
   const cakeInteractive = document.getElementById('cake-interactive');
-  const blowBtn = document.getElementById('blow-btn');
   const celebrationBoard = document.getElementById('celebration-board');
   const yesBtn = document.getElementById('love-yes-btn');
   const loveOverflow = document.getElementById('love-overflow-msg');
+  const blowSubtext = document.querySelector('.blow-subtext');
 
   function initBirthdayFinale() {
-    // Activation handled below
-  }
+    // Reset state each time we enter this chapter
+    state.candlesBlown = false;
+    if (cakeInteractive) cakeInteractive.classList.remove('extinguished');
+    if (celebrationBoard) {
+      celebrationBoard.classList.add('hidden');
+    }
+    if (blowSubtext) {
+      blowSubtext.style.opacity = 1;
+      blowSubtext.style.display = 'block';
+    }
 
-  // Candle blowing
-  blowBtn.addEventListener('click', blowOutCandles);
+    // Optional: Web Microphone API to detect blowing (rustling sounds / volume spikes)
+    try {
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+          const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          const analyser = audioContext.createAnalyser();
+          const microphone = audioContext.createMediaStreamSource(stream);
+          const javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
 
-  // Optional: Web Microphone API to detect blowing (rustling sounds / volume spikes)
-  try {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-      .then(stream => {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const analyser = audioContext.createAnalyser();
-        const microphone = audioContext.createMediaStreamSource(stream);
-        const javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
+          analyser.smoothingTimeConstant = 0.8;
+          analyser.fftSize = 1024;
 
-        analyser.smoothingTimeConstant = 0.8;
-        analyser.fftSize = 1024;
+          microphone.connect(analyser);
+          analyser.connect(javascriptNode);
+          javascriptNode.connect(audioContext.destination);
 
-        microphone.connect(analyser);
-        analyser.connect(javascriptNode);
-        javascriptNode.connect(audioContext.destination);
+          javascriptNode.onaudioprocess = () => {
+            if (state.currentChapter !== 6 || state.candlesBlown) return;
+            const array = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(array);
+            let values = 0;
 
-        javascriptNode.onaudioprocess = () => {
-          if (state.currentChapter !== 6 || state.candlesBlown) return;
-          const array = new Uint8Array(analyser.frequencyBinCount);
-          analyser.getByteFrequencyData(array);
-          let values = 0;
+            const length = array.length;
+            for (let i = 0; i < length; i++) {
+              values += array[i];
+            }
 
-          const length = array.length;
-          for (let i = 0; i < length; i++) {
-            values += array[i];
-          }
-
-          const average = values / length;
-          // Threshold of sound indicating blowing on mic
-          if (average > 75) {
-            blowOutCandles();
-            // Stop mic capture after blowout
-            stream.getTracks().forEach(track => track.stop());
-            audioContext.close();
-          }
-        };
-      })
-      .catch(err => {
-        console.log("Microphone access declined or unavailable. Blowing candles relies on button click.");
-      });
-  } catch (e) {
-    console.log("Audio analyzer API error", e);
+            const average = values / length;
+            // Threshold of sound indicating blowing on mic
+            if (average > 75) {
+              blowOutCandles();
+              // Stop mic capture after blowout
+              stream.getTracks().forEach(track => track.stop());
+              audioContext.close();
+            }
+          };
+        })
+        .catch(err => {
+          console.log("Microphone access declined or unavailable. Blowing candles relies on button click.");
+        });
+    } catch (e) {
+      console.log("Audio analyzer API error", e);
+    }
   }
 
   function blowOutCandles() {
@@ -1440,12 +1468,13 @@ Happy Birthday, Ina. I love you to the stars and back! ❤️`;
     state.candlesBlown = true;
 
     // Extinguish candles in DOM
-    const cake = document.getElementById('cake-interactive');
-    cake.classList.add('extinguished');
+    if (cakeInteractive) cakeInteractive.classList.add('extinguished');
 
-    // Hide blow controls slowly
-    blowBtn.style.opacity = 0;
-    setTimeout(() => { blowBtn.style.display = 'none'; }, 500);
+    // Hide blow text slowly
+    if (blowSubtext) {
+      blowSubtext.style.opacity = 0;
+      setTimeout(() => { blowSubtext.style.display = 'none'; }, 500);
+    }
 
     // Play high chime and trigger celebration
     playSynthNote(523.25, 0.2);

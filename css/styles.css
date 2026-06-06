@@ -14,7 +14,7 @@
   --color-text-dark: #4A2B32;
   --color-text-muted-dark: #7A5261;
   --color-text-muted-light: #A37B8B;
-  --hero-bg-image: url('/images/IMG_7561.JPG');
+  --hero-bg-image: url('../images/IMG_3044.JPG');
 
   --font-header: 'Outfit', sans-serif;
   --font-body: 'Inter', sans-serif;
@@ -452,13 +452,20 @@ body {
   padding-bottom: 0;
 }
 
-/* Wider expanded card for more readable lines of text */
-.collage-photo.expanded {
-  width: 260px;
+/* Dynamic expanded cards based on image aspect ratio */
+.collage-photo.expanded.is-landscape {
+  width: 280px;
+}
+.collage-photo.expanded.is-landscape img {
+  height: 170px;
+  border-radius: 12px 12px 0 0;
 }
 
-.collage-photo.expanded img {
-  height: 160px;
+.collage-photo.expanded.is-portrait {
+  width: 200px;
+}
+.collage-photo.expanded.is-portrait img {
+  height: 250px;
   border-radius: 12px 12px 0 0;
 }
 
@@ -525,8 +532,17 @@ body {
     padding: 4px 4px 10px 4px;
   }
 
-  .collage-photo.expanded {
-    width: 200px;
+  .collage-photo.expanded.is-landscape {
+    width: 240px;
+  }
+  .collage-photo.expanded.is-landscape img {
+    height: 140px;
+  }
+  .collage-photo.expanded.is-portrait {
+    width: 170px;
+  }
+  .collage-photo.expanded.is-portrait img {
+    height: 210px;
   }
 
   /* Hide some on mobile to avoid overcrowding */
@@ -738,12 +754,31 @@ body {
 }
 
 @keyframes otpShake {
-  0%, 100% { transform: translateX(0); }
-  15%  { transform: translateX(-6px); }
-  30%  { transform: translateX(6px); }
-  45%  { transform: translateX(-4px); }
-  60%  { transform: translateX(4px); }
-  75%  { transform: translateX(-2px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  15% {
+    transform: translateX(-6px);
+  }
+
+  30% {
+    transform: translateX(6px);
+  }
+
+  45% {
+    transform: translateX(-4px);
+  }
+
+  60% {
+    transform: translateX(4px);
+  }
+
+  75% {
+    transform: translateX(-2px);
+  }
 }
 
 .otp-submit-btn {
@@ -1387,10 +1422,11 @@ body {
 }
 
 .lightbox-content {
-  max-width: 600px;
-  width: 90%;
-  text-align: center;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .lightbox-close {
@@ -1408,9 +1444,11 @@ body {
 }
 
 #lightbox-img {
-  width: 100%;
+  max-width: 90vw;
   max-height: 70vh;
-  object-fit: contain;
+  width: auto;
+  height: auto;
+  display: block;
   border: 10px solid #fff;
   border-radius: 4px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
@@ -2186,12 +2224,21 @@ body {
 .chapter-section {
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
+
 .active-chapter {
   animation: chapterFadeIn 0.45s ease both;
 }
+
 @keyframes chapterFadeIn {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* --- CHAT: 3-DOT TYPING INDICATOR --- */
@@ -2211,12 +2258,27 @@ body {
   animation: dotBounce 1.2s ease-in-out infinite;
 }
 
-.dot-typing span:nth-child(2) { animation-delay: 0.2s; }
-.dot-typing span:nth-child(3) { animation-delay: 0.4s; }
+.dot-typing span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot-typing span:nth-child(3) {
+  animation-delay: 0.4s;
+}
 
 @keyframes dotBounce {
-  0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
-  40%           { transform: translateY(-5px); opacity: 1; }
+
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+
+  40% {
+    transform: translateY(-5px);
+    opacity: 1;
+  }
 }
 
 /* --- CHAT: BUBBLE POP-IN ANIMATION --- */
@@ -2225,8 +2287,15 @@ body {
 }
 
 @keyframes msgPopIn {
-  from { transform: scale(0.7) translateY(8px); opacity: 0; }
-  to   { transform: scale(1) translateY(0); opacity: 1; }
+  from {
+    transform: scale(0.7) translateY(8px);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
 }
 
 /* --- CHAT: SEEN TICK --- */
@@ -2246,8 +2315,8 @@ body {
     radial-gradient(ellipse at center, #c8975a 0%, #b07d43 40%, #956535 100%) !important;
   border: 4px solid #7a4e2a !important;
   box-shadow:
-    inset 0 0 40px rgba(0,0,0,0.3),
-    0 8px 30px rgba(0,0,0,0.3) !important;
+    inset 0 0 40px rgba(0, 0, 0, 0.3),
+    0 8px 30px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* --- POLAROID PUSH-PIN --- */
@@ -2260,7 +2329,7 @@ body {
   height: 14px;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #ff8fa3, #d63050);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.4);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.4);
   z-index: 2;
 }
 
@@ -2282,7 +2351,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
+  z-index: 40;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2302,29 +2371,55 @@ body {
   font-family: var(--font-handwritten);
   font-size: 15px;
   color: #a0284a;
-  background: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.85);
   padding: 3px 10px;
   border-radius: 20px;
   letter-spacing: 0.04em;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes sealPulse {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 4px 12px rgba(180, 30, 60, 0.5)); }
-  50%       { transform: scale(1.06); filter: drop-shadow(0 6px 18px rgba(200, 30, 60, 0.7)); }
+
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 4px 12px rgba(180, 30, 60, 0.5));
+  }
+
+  50% {
+    transform: scale(1.06);
+    filter: drop-shadow(0 6px 18px rgba(200, 30, 60, 0.7));
+  }
 }
 
-.wax-seal:hover { transform: translate(-50%, -50%) scale(1.08); }
+.wax-seal:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+}
 
 .wax-seal.seal-broken {
   animation: sealBreak 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 @keyframes sealBreak {
-  0%   { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; }
-  30%  { transform: translate(-50%, -50%) scale(1.2) rotate(-8deg); opacity: 1; }
-  60%  { transform: translate(-50%, -52%) scale(0.85) rotate(12deg); opacity: 0.6; }
-  100% { transform: translate(-50%, -60%) scale(0.5) rotate(20deg); opacity: 0; }
+  0% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+
+  30% {
+    transform: translate(-50%, -50%) scale(1.2) rotate(-8deg);
+    opacity: 1;
+  }
+
+  60% {
+    transform: translate(-50%, -52%) scale(0.85) rotate(12deg);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translate(-50%, -60%) scale(0.5) rotate(20deg);
+    opacity: 0;
+  }
 }
 
 /* --- CHAPTER 6: HEART GAUGE --- */
@@ -2372,7 +2467,7 @@ body {
   overflow-x: hidden;
   /* Match site background: same soft pink gradient used on the rest of the site */
   background:
-    linear-gradient(180deg, rgba(253, 230, 238, 0.97), rgba(247, 210, 231, 0.97)),
+    linear-gradient(180deg, rgba(253, 230, 238, 0.5), rgba(247, 210, 231, 0.5)),
     var(--hero-bg-image, none);
   background-size: cover;
   background-position: center;
@@ -2389,8 +2484,15 @@ body {
 }
 
 @keyframes galleryFadeIn {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Floating petals layer */
@@ -2410,8 +2512,15 @@ body {
 }
 
 @keyframes petalFall {
-  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
 }
 
 /* ---- Header ---- */
@@ -2446,8 +2555,15 @@ body {
 }
 
 @keyframes shimmerText {
-  0%,100% { background-position: 0% 50%; }
-  50%      { background-position: 100% 50%; }
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .gallery-sub {
@@ -2508,8 +2624,17 @@ body {
 }
 
 @keyframes placeholderPulse {
-  0%,100% { opacity: 0.22; transform: scale(1); }
-  50%      { opacity: 0.42; transform: scale(1.08); }
+
+  0%,
+  100% {
+    opacity: 0.22;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.42;
+    transform: scale(1.08);
+  }
 }
 
 /* ---- Revealed slot ---- */
@@ -2537,8 +2662,8 @@ body {
   border-radius: 10px;
   overflow: hidden;
   background: linear-gradient(135deg,
-    hsl(340, 60%, 90%),
-    hsl(310, 50%, 88%));
+      hsl(340, 60%, 90%),
+      hsl(310, 50%, 88%));
 }
 
 .gallery-img {
@@ -2593,8 +2718,15 @@ body {
 }
 
 @keyframes finaleReveal {
-  from { opacity: 0; transform: scale(0.9) translateY(20px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 /* Finale card — matches site's glassmorphism style */
@@ -2615,8 +2747,13 @@ body {
 }
 
 @keyframes cardGlow {
-  from { box-shadow: 0 20px 50px rgba(255, 107, 139, 0.15), 0 0 60px rgba(255, 107, 139, 0.08); }
-  to   { box-shadow: 0 24px 60px rgba(255, 107, 139, 0.25), 0 0 90px rgba(255, 107, 139, 0.13); }
+  from {
+    box-shadow: 0 20px 50px rgba(255, 107, 139, 0.15), 0 0 60px rgba(255, 107, 139, 0.08);
+  }
+
+  to {
+    box-shadow: 0 24px 60px rgba(255, 107, 139, 0.25), 0 0 90px rgba(255, 107, 139, 0.13);
+  }
 }
 
 .finale-sparkle {
@@ -2627,9 +2764,19 @@ body {
 }
 
 @keyframes sparkleSpin {
-  0%,100% { transform: scale(1) rotate(0deg); }
-  25%      { transform: scale(1.12) rotate(8deg); }
-  75%      { transform: scale(1.12) rotate(-8deg); }
+
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  25% {
+    transform: scale(1.12) rotate(8deg);
+  }
+
+  75% {
+    transform: scale(1.12) rotate(-8deg);
+  }
 }
 
 .gallery-finale-msg {
@@ -2685,9 +2832,11 @@ body {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
+
   .gallery-finale-card {
     padding: 32px 20px 28px;
   }
+
   .gallery-continue-btn {
     width: 100%;
   }
