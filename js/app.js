@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     synthInterval: null,
     heartsInterval: null,
     // Chapter specific states
-    chatProgress: 0,
     timelineIndex: 0,
     polaroidsInteracted: new Set(),
     scratchCompleted: false,
@@ -25,21 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // --- MOCK DATABASE ---
-  const chatMessages = [
-    { sender: 'other', text: "Hey! Gym mein hi hai na abhi?" },
-    { sender: 'user', text: "Haan, gym mein hoon. Kya hua?" },
-    { sender: 'other', text: "Bahut tezz baarish ho rahi hai bahar... apna dhyan rakhna! 🌧️" },
-    { sender: 'user', text: "Arey waah! Pehli baar aisi care? Shock laga par achha laga haha 😄" },
-    { sender: 'other', text: "Haha bas aise hi. Main toh apni Nani ke ghar jaa rahi hoon abhi..." },
-    { sender: 'other', text: "By the way, check this reel: 'You are a good man' ❤️" },
-    { sender: 'user', text: "Aww, thank you! Reels se direct line? Kuch badla badla lag raha hai..." },
-    { sender: 'other', text: "Maine mere bachon ke papa dhundh liye hai vaise! 😉" },
-    { sender: 'user', text: "Kya?! Kon hai woh? Mujhe bhi toh naam batao!" },
-    { sender: 'other', text: "Khud ka naam jaankar kya karoge? 🥺❤️" },
-    { sender: 'user', text: "Kya?! Main?? Sach batao clear karo!" },
-    { sender: 'other', text: "Haha wait for it... suspense achha hai! 🤫" }
-  ];
-
   const timelineMilestones = [
     {
       date: "Bachpan Ke Din 👧👦",
@@ -86,14 +70,14 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const polaroids = [
-    { id: 1, caption: "Bachpan Ki Dosti 👧👦", img: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&auto=format&fit=crop&q=80" },
-    { id: 2, caption: "Mumbai Trip Memories 🚄", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80" },
+    { id: 1, caption: "One of our favourite pic together ✨", img: "images/2Y4A2965.JPG" },
+    { id: 2, caption: "Manali Trip Memories ⛰️", img: "images/20250226_135732_IMG_1005.JPG" },
     { id: 3, caption: "That Cafe Date ☕", img: "https://images.unsplash.com/photo-1498804103079-a6351b050096?w=800&auto=format&fit=crop&q=80" },
-    { id: 4, caption: "Manali Rain & Siddu ☔", img: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800&auto=format&fit=crop&q=80" },
-    { id: 5, caption: "Instagram Twist Rizz 📱", img: "https://images.unsplash.com/photo-1531747118685-ca8fa6e08806?w=800&auto=format&fit=crop&q=80" },
+    { id: 4, caption: "Seen this so many time still feel same 🙈", img: "images/bd1aa8ef-4121-427b-a87a-1f6f21b69df2.jpg" },
+    { id: 5, caption: "Random Cuteness ✨", img: "images/Snapchat-302567164.jpg" },
     { id: 6, caption: "Our Yes Day! 22 Oct 💍", img: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=800&auto=format&fit=crop&q=80" },
-    { id: 7, caption: "Random Cuteness ✨", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800&auto=format&fit=crop&q=80" },
-    { id: 8, caption: "Pagalpan Together 😂", img: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=800&auto=format&fit=crop&q=80" }
+    { id: 7, caption: "Random Cuteness ✨", img: "images/IMG_3251.JPG" },
+    { id: 8, caption: "Love the way you put your hand on my shoulder", img: "images/IMG_2499 (1).JPG" }
   ];
 
   const wishReasons = [
@@ -109,15 +93,17 @@ document.addEventListener('DOMContentLoaded', () => {
     "You are, and will always be, the cutest and most precious person in my life."
   ];
 
-  const loveLetterText = `Dearest Ina,
+  const loveLetterText = `Dearest My girl,
 
-Bachpan se lekar aaj tak, humne kitne saare utar-chadaav dekhe hain. Woh Holi par cow ki tanki saaf karna, Mumbai station par mera rona, Manali ki baarish mein haath pakadkar Siddu khane bhaagna... har ek lamha mere dil mein basa hua hai. 
+  On your birthday, I just want to tell you how special you are to me. You are the most beautiful, honest, kind, and caring person I have ever met. I always try to make you happy and keep a smile on your face, and I promise to support you in all your dreams and ambitions.
 
-I know, jab maine pehli baar cafe confess kiya tha aur tune 'No' bola, mujhe bahut bura laga tha. Par main khush hoon ki humne dosti nahi chhodi. Aur phir Instagram par tera gym mein tezz baarish ke time 'apna dhyan rakhna' puchna, aur woh line: 'Khud ka naam jaankar kya karoge?'—it was the most beautiful moment of my life!
+  Ina, I never thought I would be lucky enough to find such an amazing partner. You're not only special to me but also to your family, friends, and everyone around you. You have a way of bringing happiness to people's lives just by being yourself.
 
-Aaj tumhare birthday par, main promise karta hoon ki main hamesha tumhara haath pakadkar baarish mein bhaagta rahunga. I promise to support all your dreams and keep making you laugh. Tum mere liye sabse cutest aur sabse special person ho. 
+  Aaj tumhare birthday par, main promise karta hoon ki main hamesha tumhara haath pakadkar chalunga. I promise to support all your dreams, celebrate your achievements, and keep making you laugh every day.
 
-Happy Birthday, Ina. I love you to the stars and back! ❤️`;
+  I know I'm not very good at expressing my feelings, but I truly hope you understand how much I love you. No matter what happens, I will always be there for you, standing by your side through every moment.
+
+  Happy Birthday, Ina. I love you to the stars and back! ❤️✨`;
 
   // --- AUDIO SYNTHESIZER FALLBACK ---
   // Plays romantic piano arpeggios if audio asset fails or as an ambient layer
@@ -380,7 +366,7 @@ Happy Birthday, Ina. I love you to the stars and back! ❤️`;
     { src: 'images/47099d555eec458a9775bbe3d8059680.mp4', caption: 'The most beautiful chapter of my life ✨' },
   ];
 
-  const galleryFinaleText = `My favorite picture isn't in this gallery...\nIt's the one we're still creating together. ❤️`;
+  const galleryFinaleText = `My favorite pictures are in this gallery...\nIt's not only these, I have so many more, but I can't show everything here. ❤️`;
 
   function initGallery() {
     const grid = document.getElementById('gallery-grid');
@@ -1193,6 +1179,7 @@ Happy Birthday, Ina. I love you to the stars and back! ❤️`;
         wishLocked = true;
 
         star.classList.add('wish-active');
+        star.classList.add('viewed');
         setTimeout(() => star.classList.remove('wish-active'), 500);
 
         playSynthNote(523.25, 0.15);
