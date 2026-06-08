@@ -348,18 +348,18 @@ document.addEventListener('DOMContentLoaded', () => {
   // MEMORY GALLERY LOGIC
   // ============================================================
   const galleryData = [
-    { src: 'images/VID_20260528_115730_645.mp4', caption: 'The smile that brightens every room ❤️' },
-    { src: 'images/34d4d95fd394466a81826d067c3ef256.mp4', caption: 'One of my favorite memories ✨' },
-    { src: 'images/268b8458eae84c859230793d3bf34124.mp4', caption: 'Still makes me smile every time 😊' },
-    { src: 'images/4120aeb96b28465d9835a09077c894cd.mp4', caption: 'Family, love and happiness ❤️' },
-    { src: 'images/eb0ede02207b4019990461a699e7c776.mp4', caption: 'Main character energy 👑' },
-    { src: 'images/fa224fb47238447ea71d8fb66cc0edee.mp4', caption: 'This picture deserves a frame 🖼️' },
-    { src: 'images/VID_20260513_113641_684.mp4', caption: 'Caught being adorable 😍' },
-    { src: 'images/VID_20260523_084126_605.mp4', caption: 'I still laugh at this one 😂' },
-    { src: 'images/VID_20260523_084126_606.mp4', caption: 'A moment worth keeping forever 💕' },
-    { src: 'images/d9472d57d54545e7a7182a5f5acd6759.mp4', caption: 'Pure happiness captured 📸' },
-    { src: 'images/0419993ba0634ffda7dd002176a2a314.mp4', caption: 'My lucky day was meeting you ❤️' },
-    { src: 'images/47099d555eec458a9775bbe3d8059680.mp4', caption: 'The most beautiful chapter of my life ✨' },
+    { src: 'images/VID_20260528_115730_645.mp4', caption: 'The cutest snap in my gallery ❤️' },
+    { src: 'images/34d4d95fd394466a81826d067c3ef256.mp4', caption: 'Pyaari si smile, pyaari si tum ✨' },
+    { src: 'images/268b8458eae84c859230793d3bf34124.mp4', caption: 'Yeh video dekh kar main hamesha smile karta hoon 😊' },
+    { src: 'images/4120aeb96b28465d9835a09077c894cd.mp4', caption: 'Tumhari choti choti harkatein 😍' },
+    { src: 'images/eb0ede02207b4019990461a699e7c776.mp4', caption: 'My favorite main character 👑' },
+    { src: 'images/fa224fb47238447ea71d8fb66cc0edee.mp4', caption: 'Full on drama and cuteness 😂' },
+    { src: 'images/VID_20260513_113641_684.mp4', caption: 'Caught you being the absolute cutest 😍' },
+    { src: 'images/VID_20260523_084126_605.mp4', caption: 'Hamesha bachhon ki tarah behave karti ho 😂' },
+    { src: 'images/VID_20260523_084126_606.mp4', caption: 'Yeh snap toh hamesha save rahegi 💕' },
+    { src: 'images/d9472d57d54545e7a7182a5f5acd6759.mp4', caption: 'Just you being your pure, happy self ✨' },
+    { src: 'images/0419993ba0634ffda7dd002176a2a314.mp4', caption: 'Nazar na lage meri queen ko 🧿' },
+    { src: 'images/47099d555eec458a9775bbe3d8059680.mp4', caption: 'My absolute favorite person ever ❤️' },
   ];
 
   const galleryFinaleText = `My favorite pictures are in this gallery...\nIt's not only these, I have so many more, but I can't show everything here. ❤️`;
@@ -387,11 +387,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Reveal images one by one every 1 second
     galleryData.forEach((item, i) => {
-      setTimeout(() => revealGallerySlot(i, item), (i + 1) * 100);
+      setTimeout(() => revealGallerySlot(i, item), (i + 1) * 2200);
     });
 
     // After all 12 are shown: wait 2s then trigger finale
-    setTimeout(() => triggerGalleryFinale(), (galleryData.length * 2 + 4) * 100);
+    setTimeout(() => triggerGalleryFinale(), (galleryData.length * 2 + 4) * 1200);
   }
 
   function revealGallerySlot(index, item) {
@@ -477,6 +477,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       finale.classList.remove('hidden');
       finale.classList.add('gallery-finale-visible');
+
+      // Scroll to finale so user doesn't miss it if they haven't scrolled down fully
+      finale.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
       // Start typewriter on the message
       const target = document.getElementById('gallery-typewriter');

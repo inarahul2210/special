@@ -2523,8 +2523,10 @@ body {
 
 /* ---- Finale overlay ---- */
 .gallery-finale {
-  position: fixed;
-  inset: 0;
+  position: relative;
+  width: 100%;
+  margin-top: 40px;
+  padding-bottom: 60px;
   z-index: 100;
   display: flex;
   align-items: center;
