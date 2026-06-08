@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       date: "Café Confession ☕",
       title: "Pehla 'Haan' Maangna",
-      desc: "Phir aaya wo din... Bahut zyada mushkil ke baad humein yeh mauka mila ki hum dono kahin bahar akele jaa sakein. Par coffee itni gandi thi aur nervousness itni zyada ki tujhe seedha dekh bhi nahi paya. Maine apni life ka sabse important moment itne gande way se start kiya ki kya bataun. Bina tujhe dekhe apne pyaar ke baare mein batana bahut bura propose tha 😂. Agle din gym mein tera message aaya: 'Rahul, hamara koi future nahi hai.' Dil toota, par tujhe khona nahi tha. Iska koi image nhi tha 😂",
+      desc: "Phir aaya wo din... Bahut zyada mushkil ke baad humein yeh mauka mila ki hum dono kahin bahar akele jaa sakein. Par coffee itni gandi thi aur nervousness itni zyada ki tujhe seedha dekh bhi nahi paya. Maine apni life ka sabse important moment itne gande way se start kiya ki kya bataun. Bina tujhe dekhe apne pyaar ke baare mein batana bahut bura propose tha 😂. Agle din gym mein tera message aaya: 'Rahul, hamara koi future nahi hai.' Dil toota, par tujhe khona nahi tha.",
       img: "images/Snapchat-1146002892.jpg",
       sticker: "💔"
     },
@@ -282,7 +282,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Card navigation: Welcome → Passcode and back
   startSurpriseBtn.addEventListener('click', () => {
     welcomeCard.classList.remove('active-card');
     welcomeCard.classList.add('hidden-card');
@@ -290,6 +289,9 @@ document.addEventListener('DOMContentLoaded', () => {
     passcodeCard.classList.add('active-card');
     // Focus first OTP box
     if (otpBoxes[0]) setTimeout(() => otpBoxes[0].focus(), 300);
+
+    // Initialize background audio on first user gesture
+    initAudio();
   });
 
   backToWelcomeBtn.addEventListener('click', () => {
@@ -807,16 +809,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function initAudio() {
     if (state.audioInitialized) return;
 
-    // Check if background MP3 plays successfully, fallback to custom synth if it throws error
     bgAudio.volume = 0.3;
-    bgAudio.play()
-      .then(() => {
-        console.log("Audio playing successfully.");
-      })
-      .catch(err => {
-        console.log("Local audio blocked or missing. Starting synth audio fallback.");
-        startAmbientSynth();
-      });
+    toggleMusic(true);
 
     state.audioInitialized = true;
   }
@@ -828,16 +822,22 @@ document.addEventListener('DOMContentLoaded', () => {
   function toggleMusic(play) {
     state.musicPlaying = play;
     if (play) {
-      bgAudio.play().catch(() => { });
-      if (!bgAudio.duration) {
-        startAmbientSynth();
-      }
+      bgAudio.play()
+        .then(() => {
+          console.log("Audio playing successfully.");
+        })
+        .catch(err => {
+          console.log("Local audio blocked or missing. Starting synth audio fallback.");
+          startAmbientSynth();
+        });
+
       playIcon.classList.add('hidden');
       pauseIcon.classList.remove('hidden');
       reels.forEach(r => r.classList.add('spinning'));
     } else {
       bgAudio.pause();
       stopAmbientSynth();
+
       playIcon.classList.remove('hidden');
       pauseIcon.classList.add('hidden');
       reels.forEach(r => r.classList.remove('spinning'));
@@ -1374,7 +1374,7 @@ document.addEventListener('DOMContentLoaded', () => {
           playSynthNote(659.25, 0.05); // high E chime
         }
 
-        setTimeout(type, 28);
+        setTimeout(type, 45);
       } else {
         // Typing finished
         completionPanel5.classList.remove('hidden');
@@ -1406,7 +1406,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Optional: Web Microphone API to detect blowing (rustling sounds / volume spikes)
     try {
-      navigator.mediaDevices.getUserMedia({ audio: true })
+      // Duck background audio volume to prevent it from interfering with microphone
+      if (bgAudio) bgAudio.volume = 0.03;
+
+      navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: false }
+      })
         .then(stream => {
           const audioContext = new (window.AudioContext || window.webkitAudioContext)();
           const analyser = audioContext.createAnalyser();
@@ -1432,8 +1437,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const average = values / length;
-            // Threshold of sound indicating blowing on mic
-            if (average > 75) {
+            // Threshold of sound indicating blowing on mic (drastically lowered)
+            if (average > 20) {
               blowOutCandles();
               // Stop mic capture after blowout
               stream.getTracks().forEach(track => track.stop());
@@ -1449,9 +1454,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function triggerBdayCelebration() {
+    const overlay = document.getElementById('bday-celebration-overlay');
+    const confettiContainer = document.getElementById('bday-confetti-container');
+
+    overlay.classList.remove('hidden');
+
+    // Spawn balloons and confetti
+    for (let i = 0; i < 40; i++) {
+      setTimeout(() => {
+        const balloon = document.createElement('div');
+        balloon.className = 'bday-balloon';
+        const isConfetti = Math.random() > 0.5;
+        balloon.innerText = isConfetti ? '🎉' : '🎈';
+        balloon.style.left = (Math.random() * 90) + 'vw';
+        balloon.style.fontSize = (30 + Math.random() * 40) + 'px';
+        balloon.style.animationDuration = (3 + Math.random() * 3) + 's';
+        confettiContainer.appendChild(balloon);
+      }, i * 120);
+    }
+
+    // Hide after 6.5 seconds
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+      setTimeout(() => { confettiContainer.innerHTML = ''; }, 500);
+    }, 6500);
+  }
+
   function blowOutCandles() {
     if (state.candlesBlown) return;
     state.candlesBlown = true;
+
+    // Restore background audio volume
+    if (bgAudio && state.musicPlaying) bgAudio.volume = 0.3;
 
     // Extinguish candles in DOM
     if (cakeInteractive) cakeInteractive.classList.add('extinguished');
@@ -1461,6 +1496,9 @@ document.addEventListener('DOMContentLoaded', () => {
       blowSubtext.style.opacity = 0;
       setTimeout(() => { blowSubtext.style.display = 'none'; }, 500);
     }
+
+    // Trigger celebration animation!
+    triggerBdayCelebration();
 
     // Play high chime and trigger celebration
     playSynthNote(523.25, 0.2);
