@@ -673,6 +673,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const newTop = startTop + deltaY;
       photo.style.left = `${newLeft}px`;
       photo.style.top = `${newTop}px`;
+      photo.style.bottom = 'auto';
+      photo.style.right = 'auto';
       photo.style.transform = 'none';
     });
 
