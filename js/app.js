@@ -1460,9 +1460,14 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (e) { /* silent */ }
   }
 
-  function triggerBdayCelebration() {
+  function triggerBdayCelebration(customText) {
     const overlay = document.getElementById('bday-celebration-overlay');
     const confettiContainer = document.getElementById('bday-confetti-container');
+    const floatingText = overlay.querySelector('.bday-floating-text');
+    
+    if (floatingText) {
+      floatingText.textContent = customText ? customText : "Happy Birthday to You, My Love ❤️";
+    }
 
     overlay.classList.remove('hidden');
 
@@ -1549,6 +1554,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const lovePercentEl = document.getElementById('love-percent');
     if (lovePercentEl) lovePercentEl.textContent = Math.round(percent * 100);
+
+    if (state.loveClickCount === 5) {
+      triggerBdayCelebration("I Love You to Infinity! ❤️");
+      if (window.celebrationFireworks) {
+        window.celebrationFireworks.start();
+      }
+    }
 
     if (state.loveClickCount >= 5) {
       loveOverflow.classList.remove('hidden');
