@@ -72,25 +72,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const polaroids = [
     { id: 1, caption: "One of our favourite pic together ✨", img: "images/2Y4A2965.JPG" },
     { id: 2, caption: "Manali Trip Memories ⛰️", img: "images/20250226_135732_IMG_1005.JPG" },
-    { id: 3, caption: "That Cafe Date ☕", img: "https://images.unsplash.com/photo-1498804103079-a6351b050096?w=800&auto=format&fit=crop&q=80" },
+    { id: 3, caption: "My madam ji", img: "images/SHP_6656.JPG" },
     { id: 4, caption: "Seen this so many time still feel same 🙈", img: "images/bd1aa8ef-4121-427b-a87a-1f6f21b69df2.jpg" },
     { id: 5, caption: "Random Cuteness ✨", img: "images/Snapchat-302567164.jpg" },
-    { id: 6, caption: "Our Yes Day! 22 Oct 💍", img: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=800&auto=format&fit=crop&q=80" },
-    { id: 7, caption: "Random Cuteness ✨", img: "images/IMG_3251.JPG" },
-    { id: 8, caption: "Love the way you put your hand on my shoulder", img: "images/IMG_2499 (1).JPG" }
+    { id: 6, caption: "Sometimes, not being okay is actually a good thing. ✨", img: "images/2Y4A1805.JPG" },
+    { id: 7, caption: "Love the way you hold me and my life ✨", img: "images/IMG_3251.JPG" },
+    { id: 8, caption: "Love the way you put your hand on my shoulder", img: "images/IMG_2499 (1).JPG" },
+    { id: 9, caption: "Keep holding my hand forever.", img: "images/2Y4A9395.JPG" }
   ];
 
   const wishReasons = [
     "Mujhe tumhari aakhon ki woh chamak sabse pyaari lagti hai.",
-    "Holi par cow ki paani ki tanki saaf karne wala madness sirf tumhare saath ho sakta tha!",
-    "Bahar tezz baarish ke time tumhara 'apna dhyan rakhna' puchna changed my world.",
-    "I love how comfortable you are with me, sharing every little details of your life.",
-    "Tumhare saath ghumi har jagah—chahe Mumbai ho ya Manali—sabse haseen hai.",
-    "Tumhare face par jo cute si smile aati hai jab tum sharmati ho.",
-    "That heart-stopping message: 'Khud ka naam jaankar kya karoge?'",
-    "I love that we can behave like little kids together, forgetting the entire world.",
-    "Tumhare naram haathon ko pakadkar baarish mein bhaagna is my favorite feeling.",
-    "You are, and will always be, the cutest and most precious person in my life."
+    "Tumhari smile mein ek aisa magic hai jo mera poora din bana deta hai.",
+    "You have the purest heart, and your kindness makes me fall for you every single day.",
+    "Tumhare gusse mein bhi itni cuteness hoti hai ki mera dil pighal jaata hai.",
+    "You are, and will always be, the cutest, most gorgeous, and precious person in my life."
   ];
 
   const loveLetterText = `Dearest My girl,
@@ -1187,7 +1183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => playSynthNote(783.99, 0.3), 240);
 
         const reason = wishReasons[i % wishReasons.length];
-        wishText.innerText = `"${reason}"`;
+        wishText.innerText = reason;
         document.querySelector('.modal-emoji').innerText = ['🌟', '✨', '🌠', '💫', '🌙'][i % 5];
         document.querySelector('.modal-card h4').innerText = 'A Star Wish For You ✨';
 
