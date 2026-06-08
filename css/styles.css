@@ -2074,6 +2074,8 @@ body {
   font-size: 20px;
   pointer-events: none;
   animation: floatUpwards 6s linear forwards;
+  will-change: transform, opacity;
+  contain: layout style;
 }
 
 .floating-heart.click-spawned {

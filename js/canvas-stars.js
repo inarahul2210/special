@@ -12,7 +12,7 @@
 
   const stars = [];
   const shootingStars = [];
-  const starCount = Math.min(150, Math.floor((width * height) / 8000));
+  const starCount = Math.min(80, Math.floor((width * height) / 15000));
 
   // Mouse interactivity variables
   let mouse = { x: null, y: null, active: false };
@@ -123,24 +123,11 @@
     // Update and Draw Twinkling Stars
     stars.forEach(star => {
       star.update();
-      
-      // If mouse is near, add a small subtle parallax drift
-      if (mouse.active) {
-        const dx = mouse.x - star.x;
-        const dy = mouse.y - star.y;
-        const dist = Math.hypot(dx, dy);
-        if (dist < 150) {
-          const force = (150 - dist) / 150;
-          star.x -= dx * force * 0.03;
-          star.y -= dy * force * 0.03;
-        }
-      }
-      
       star.draw();
     });
 
     // Randomly spawn a shooting star
-    if (Math.random() < 0.008 && shootingStars.length < 3) {
+    if (Math.random() < 0.005 && shootingStars.length < 2) {
       // Find inactive shooting star or create new
       const inactiveStar = shootingStars.find(s => !s.active);
       if (inactiveStar) {
@@ -166,11 +153,15 @@
     init();
   });
 
-  // Track Mouse movement
+  // Track Mouse movement (throttled)
+  let mouseThrottle = false;
   window.addEventListener('mousemove', (e) => {
+    if (mouseThrottle) return;
+    mouseThrottle = true;
     mouse.x = e.clientX;
     mouse.y = e.clientY;
     mouse.active = true;
+    setTimeout(() => { mouseThrottle = false; }, 100);
   });
 
   window.addEventListener('mouseleave', () => {

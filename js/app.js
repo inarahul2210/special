@@ -122,9 +122,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       osc.start();
       osc.stop(audioCtx.currentTime + duration);
-    } catch (e) {
-      console.log("AudioContext failed", e);
-    }
+
+      // Disconnect nodes after playback to prevent memory leak
+      osc.onended = () => {
+        osc.disconnect();
+        gain.disconnect();
+      };
+    } catch (e) { /* silent */ }
   }
 
   function startAmbientSynth() {
@@ -161,45 +165,40 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- FLOATING HEARTS SYSTEM ---
+  const MAX_HEARTS = 15; // Cap DOM hearts to prevent lag
+
   function spawnHeart() {
     const container = document.getElementById('hearts-container');
     if (!container) return;
+    // Limit number of hearts in DOM
+    if (container.childElementCount >= MAX_HEARTS) return;
 
     const heart = document.createElement('div');
     heart.classList.add('floating-heart');
 
-    // Random emoji styles
     const heartEmojis = ['❤️', '💖', '💗', '💕', '🌸', '✨'];
     heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
 
-    // Random position and scaling
-    const size = Math.random() * 15 + 10;
+    const size = Math.random() * 20 + 12;
     heart.style.fontSize = `${size}px`;
     heart.style.left = `${Math.random() * 100}vw`;
 
-    // Random drift and animation speed
-    const driftX = (Math.random() * 100 - 50) * 2; // -100px to 100px
+    const driftX = (Math.random() * 100 - 50) * 2;
     heart.style.setProperty('--drift-x', `${driftX}px`);
 
-    const duration = Math.random() * 4 + 4; // 4s to 8s
+    const duration = Math.random() * 4 + 4;
     heart.style.animationDuration = `${duration}s`;
 
     container.appendChild(heart);
-
-    // Cleanup after animation completes
-    setTimeout(() => {
-      heart.remove();
-    }, duration * 1000);
+    setTimeout(() => { heart.remove(); }, duration * 1000);
   }
 
   function spawnHeartAtClick(clientX, clientY) {
     const container = document.getElementById('hearts-container');
-    console.log('spawnHeartAtClick called, container:', container);
     if (!container) return;
+    if (container.childElementCount >= MAX_HEARTS) return;
 
-    // Spawn 3-5 hearts clustered around click point
-    const count = Math.floor(Math.random() * 3) + 3;
-    console.log('Spawning', count, 'hearts at', clientX, clientY);
+    const count = Math.floor(Math.random() * 2) + 2; // 2-3 hearts (reduced from 3-5)
     for (let i = 0; i < count; i++) {
       const heart = document.createElement('div');
       heart.classList.add('floating-heart', 'click-spawned');
@@ -210,17 +209,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const size = Math.random() * 18 + 14;
       heart.style.fontSize = `${size}px`;
 
-      // Start from click location (viewport coords)
-      const offsetX = (Math.random() - 0.5) * 40; // ±20px spread
+      const offsetX = (Math.random() - 0.5) * 40;
       const offsetY = (Math.random() - 0.5) * 40;
-      const finalX = clientX + offsetX;
-      const finalY = clientY + offsetY;
-      heart.style.left = `${finalX}px`;
-      heart.style.top = `${finalY}px`;
+      heart.style.left = `${clientX + offsetX}px`;
+      heart.style.top = `${clientY + offsetY}px`;
 
-      console.log('Heart', i, 'positioned at', finalX, finalY);
-
-      // Drift upward and sideways
       const driftX = (Math.random() * 100 - 50) * 1.5;
       heart.style.setProperty('--drift-x', `${driftX}px`);
 
@@ -228,16 +221,13 @@ document.addEventListener('DOMContentLoaded', () => {
       heart.style.animationDuration = `${duration}s`;
 
       container.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, duration * 1000);
+      setTimeout(() => { heart.remove(); }, duration * 1000);
     }
   }
 
   function startHeartsRain() {
     if (state.heartsInterval) return;
-    state.heartsInterval = setInterval(spawnHeart, 1200);
+    state.heartsInterval = setInterval(spawnHeart, 3000); // Slowed from 1.2s to 3s
   }
 
   // --- WELCOME SCREEN UNLOCK ---
@@ -414,11 +404,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let media;
     if (item.src.endsWith('.mp4') || item.src.endsWith('.webm')) {
       media = document.createElement('video');
-      media.src = item.src;
-      media.autoplay = true;
-      media.loop = false; // changed to false so they stop after one run
+      media.dataset.src = item.src; // Defer loading until slot is revealed
+      media.autoplay = false;
+      media.loop = false;
       media.muted = true;
       media.playsInline = true;
+      media.preload = 'none'; // Don't preload until needed
       media.classList.add('gallery-img');
     } else {
       media = document.createElement('img');
@@ -460,6 +451,14 @@ document.addEventListener('DOMContentLoaded', () => {
         slot.classList.add('gallery-slot-revealed');
       });
     });
+
+    // Start video playback now that this slot is visible
+    const video = slot.querySelector('video[data-src]');
+    if (video) {
+      video.src = video.dataset.src;
+      video.removeAttribute('data-src');
+      video.play().catch(() => {});
+    }
 
     // Small sound chime
     playSynthNote(523.25 + index * 20, 0.08);
@@ -519,6 +518,9 @@ document.addEventListener('DOMContentLoaded', () => {
     galleryScreen.style.transition = 'opacity 0.7s ease';
     galleryScreen.style.opacity = '0';
 
+    // Stop gallery petals to free up resources
+    stopGalleryPetals();
+
     setTimeout(() => {
       galleryScreen.classList.add('hidden');
       galleryScreen.classList.remove('gallery-screen-active');
@@ -530,11 +532,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ---- GALLERY PETALS ----
+  let petalInterval = null;
   function spawnGalleryPetals() {
     const container = document.getElementById('gallery-petals');
     if (!container) return;
     const petals = ['🌸', '🌺', '✨', '💫', '🌹', '💕', '⭐'];
+    const MAX_PETALS = 8;
     function addPetal() {
+      if (container.childElementCount >= MAX_PETALS) return;
       const p = document.createElement('span');
       p.classList.add('gallery-petal');
       p.textContent = petals[Math.floor(Math.random() * petals.length)];
@@ -545,8 +550,15 @@ document.addEventListener('DOMContentLoaded', () => {
       container.appendChild(p);
       setTimeout(() => p.remove(), 14000);
     }
-    for (let i = 0; i < 12; i++) setTimeout(addPetal, i * 400);
-    setInterval(addPetal, 1800);
+    for (let i = 0; i < 6; i++) setTimeout(addPetal, i * 600); // Reduced from 12 to 6
+    petalInterval = setInterval(addPetal, 4000); // Slowed from 1.8s to 4s
+  }
+
+  function stopGalleryPetals() {
+    if (petalInterval) {
+      clearInterval(petalInterval);
+      petalInterval = null;
+    }
   }
 
   // ---- GALLERY CONFETTI ----
@@ -557,7 +569,7 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.height = window.innerHeight;
     canvas.style.display = 'block';
 
-    const pieces = Array.from({ length: 160 }, () => ({
+    const pieces = Array.from({ length: 80 }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * -canvas.height,
       r: Math.random() * 7 + 3,
@@ -794,7 +806,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const isButton = e.target.closest('button') || e.target.closest('input');
 
     if (!isPhoto && !isCard && !isButton) {
-      console.log('Spawning heart at:', e.clientX, e.clientY);
       spawnHeartAtClick(e.clientX, e.clientY);
     }
   });
@@ -823,11 +834,7 @@ document.addEventListener('DOMContentLoaded', () => {
     state.musicPlaying = play;
     if (play) {
       bgAudio.play()
-        .then(() => {
-          console.log("Audio playing successfully.");
-        })
-        .catch(err => {
-          console.log("Local audio blocked or missing. Starting synth audio fallback.");
+        .catch(() => {
           startAmbientSynth();
         });
 
@@ -1354,24 +1361,25 @@ document.addEventListener('DOMContentLoaded', () => {
     let index = 0;
     typewriterTarget.innerHTML = '';
 
+    // Cache the scrollable content reference
+    const paperContent = letterPaper.querySelector('.letter-scrollable-content');
+
     function type() {
       if (index < loveLetterText.length) {
         const char = loveLetterText.charAt(index);
 
         if (char === '\n') {
-          typewriterTarget.innerHTML += '<br>';
+          typewriterTarget.appendChild(document.createElement('br'));
         } else {
-          typewriterTarget.innerHTML += char;
+          typewriterTarget.appendChild(document.createTextNode(char));
         }
 
         index++;
-        // Speed up scroll position as we type to keep it visible
-        const paperContent = letterPaper.querySelector('.letter-scrollable-content');
         paperContent.scrollTop = paperContent.scrollHeight;
 
-        // Soft micro chime every 8 characters for typewriter audio feedback
-        if (index % 12 === 0) {
-          playSynthNote(659.25, 0.05); // high E chime
+        // Soft micro chime every 16 characters for typewriter audio feedback
+        if (index % 16 === 0) {
+          playSynthNote(659.25, 0.05);
         }
 
         setTimeout(type, 45);
@@ -1446,12 +1454,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           };
         })
-        .catch(err => {
-          console.log("Microphone access declined or unavailable. Blowing candles relies on button click.");
-        });
-    } catch (e) {
-      console.log("Audio analyzer API error", e);
-    }
+        .catch(() => { /* Mic not available, button fallback only */ });
+    } catch (e) { /* silent */ }
   }
 
   function triggerBdayCelebration() {
@@ -1460,8 +1464,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     overlay.classList.remove('hidden');
 
-    // Spawn balloons and confetti
-    for (let i = 0; i < 40; i++) {
+    // Spawn balloons and confetti (reduced count for performance)
+    for (let i = 0; i < 20; i++) {
       setTimeout(() => {
         const balloon = document.createElement('div');
         balloon.className = 'bday-balloon';
@@ -1471,7 +1475,7 @@ document.addEventListener('DOMContentLoaded', () => {
         balloon.style.fontSize = (30 + Math.random() * 40) + 'px';
         balloon.style.animationDuration = (3 + Math.random() * 3) + 's';
         confettiContainer.appendChild(balloon);
-      }, i * 120);
+      }, i * 200);
     }
 
     // Hide after 6.5 seconds
@@ -1506,9 +1510,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => playSynthNote(783.99, 0.2), 300);
     setTimeout(() => playSynthNote(1046.50, 0.6), 450);
 
-    // Burst confetti hearts
-    for (let i = 0; i < 25; i++) {
-      setTimeout(spawnHeart, i * 80);
+    // Burst confetti hearts (reduced for performance)
+    for (let i = 0; i < 10; i++) {
+      setTimeout(spawnHeart, i * 150);
     }
 
     // Trigger Canvas Fireworks
@@ -1531,7 +1535,7 @@ document.addEventListener('DOMContentLoaded', () => {
     playSynthNote(783.99 + (state.loveClickCount * 40), 0.2);
 
     // Burst hearts from button
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 3; i++) {
       spawnHeart();
     }
 
@@ -1547,8 +1551,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (state.loveClickCount >= 5) {
       loveOverflow.classList.remove('hidden');
       yesBtn.innerText = "I Love You to Infinity! ❤️";
-      // Extra fireworks
-      for (let i = 0; i < 30; i++) setTimeout(spawnHeart, i * 60);
+      // Extra hearts (reduced for performance)
+      for (let i = 0; i < 10; i++) setTimeout(spawnHeart, i * 150);
     }
   });
 
